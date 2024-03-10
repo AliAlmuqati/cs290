@@ -3,6 +3,7 @@ import 'package:cs290_app/Pages/LoginPage.dart';
 import 'package:cs290_app/Pages/MainPage.dart';
 import 'package:cs290_app/Pages/SignIn.dart';
 import 'package:cs290_app/Pages/play.dart';
+import 'package:cs290_app/Pages/profile/Profile.dart';
 import 'package:cs290_app/Pages/splash.dart';
 import 'package:cs290_app/firebase_options.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
@@ -35,6 +36,7 @@ class MyApp extends StatelessWidget {
         '/LoginPage': (context) => LoginPage(),
         '/signin': (context) => const SignIn(),
         '/play': (context) => const play(),
+        '/Profile':(context) => const Profile(),
       },
     );
   }

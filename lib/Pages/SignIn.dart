@@ -1,13 +1,26 @@
+// ignore_for_file: unused_local_variable
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 final _emilController = TextEditingController();
 final _passwordController = TextEditingController();
-final _UserController = TextEditingController();
+final _FirstNameController = TextEditingController();
+final _LastNameController = TextEditingController();
+final _db = FirebaseFirestore.instance;
 
 class SignIn extends StatelessWidget {
   const SignIn({super.key});
+
+  // Future addUserDetails(String firstname, String lastname, String email) async {
+  //   await FirebaseFirestore.instance.collection('Users').add({
+  //     'firstname': firstname,
+  //     'lastname': lastname,
+  //     'email': email,
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -56,10 +69,32 @@ class SignIn extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20),
                       child: TextField(
-                        controller: _UserController,
+                        controller: _FirstNameController,
                         decoration: InputDecoration(
                           border: InputBorder.none,
-                          hintText: 'User name',
+                          hintText: 'First name',
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+
+                SizedBox(
+                  height: 10,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(12)),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: TextField(
+                        controller: _LastNameController,
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: 'Last  name',
                         ),
                       ),
                     ),
@@ -120,10 +155,33 @@ class SignIn extends StatelessWidget {
                   child: GestureDetector(
                     onTap: () async {
                       try {
-                        final credential = await FirebaseAuth.instance
+                        UserCredential userCredential = await FirebaseAuth
+                            .instance
                             .createUserWithEmailAndPassword(
                                 email: _emilController.text,
                                 password: _passwordController.text);
+
+                        // FirebaseFirestore.instance
+                        //     .collection("Users")
+                        //     .doc(userCredential.user!.email)
+                        //     .set({
+                        //   'firstname': _FirstNameController.text,
+                        //   'lastname': _LastNameController.text,
+                        //   'email': _emilController,
+                        // });
+
+                        await FirebaseFirestore.instance
+                            .collection("Users")
+                            .doc(userCredential.user!.email)
+                            .set({
+                          "firstname": _FirstNameController.text,
+                          "lastname": _LastNameController.text,
+                          "email": _emilController.text,
+                        });
+
+                        // addUserDetails(_FirstNameController.text,
+                        //     _LastNameController.text, _emilController.text);
+
                         Navigator.of(context).pushReplacementNamed('/play');
                       } on FirebaseAuthException catch (e) {
                         if (e.code == "weak-password") {

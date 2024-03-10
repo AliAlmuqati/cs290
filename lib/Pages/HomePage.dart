@@ -43,10 +43,10 @@ class HomePage extends StatelessWidget {
                   Container(
                     child: ElevatedButton(
                       onPressed: () {
-                        Navigator.pushNamed(context, '/LoginPage');
+                        Navigator.pushNamed(context, '/Profile');
                       },
                       // ignore: sort_child_properties_last
-                      child: Text("Log in"),
+                      child: Text("Profile"),
                       style: ElevatedButton.styleFrom(
                           fixedSize: const Size(100, 70)),
                     ),
@@ -54,15 +54,7 @@ class HomePage extends StatelessWidget {
                   SizedBox(
                     height: 10,
                   ),
-                  Container(
-                      child: ElevatedButton(
-                          onPressed: () {
-                            Navigator.pushNamed(context, '/signin');
-                          },
-                          child: Text("Sign up"),
-                          style: ElevatedButton.styleFrom(
-                            fixedSize: const Size(100, 70),
-                          )))
+                  
                 ],
               ),
             ))
